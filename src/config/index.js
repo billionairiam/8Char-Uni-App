@@ -1,4 +1,4 @@
-export const APP_AUTHOR = '阿轩的Bug';
+export const APP_AUTHOR = '马良';
 export const APP_NAME = '四柱易学';
 export const APP_SUB_NAME = '八字排盘工具';
 export const APP_DESCRIPTION = '专业命理师首选四柱排盘工具';
