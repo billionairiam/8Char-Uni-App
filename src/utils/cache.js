@@ -4,12 +4,12 @@ export const getPrefixKey = key =>{
     return `${CACHE_PREFIX}-${key}`
 }
 
-export const getLocalStorage = key => {
-    return uni.getStorageSync(getPrefixKey(key))
-}
-
 export const setLocalStorage = (key,value)=>{
     uni.setStorageSync(getPrefixKey(key), value)
+}
+
+export const getLocalStorage = key => {
+    return uni.getStorageSync(getPrefixKey(key))
 }
 
 export const deleteLocalStorage = key => {

@@ -110,7 +110,7 @@
             "mode" : "hash",
             "base" : "./"
         },
-        "title" : "四柱易学-阿轩的Bug",
+        "title" : "四柱易学",
         "devServer" : {
             "https" : false
         },

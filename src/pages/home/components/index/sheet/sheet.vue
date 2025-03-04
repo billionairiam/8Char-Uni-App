@@ -25,7 +25,8 @@
         </u-form-item>
 
         <u-form-item :border-bottom="false">
-          <yx-input v-model="form.datetimeLabel" margin="12" disabled placeholder="请选择时间" @click="SelectTime">
+          <yx-input v-model="form.datetimeLabel" margin="12" disabled :placeholder=
+                  "form.model === 0 ? form.defaultTime : form.eightchar" @click="SelectTime">
             <template #icon>
               <u-icon name="calendar-fill"></u-icon>
             </template>
@@ -67,7 +68,7 @@
 <script setup>
 import {reactive, ref, watch} from "vue";
 import {onLoad} from "@dcloudio/uni-app";
-import {Solar} from "lunar-javascript";
+import {Solar, Lunar} from "lunar-javascript";
 import {deleteLocalStorage, getLocalStorage, setLocalStorage} from "@/utils/cache";
 import {GetBook, GetInfo} from "@/api/default";
 import {useDetailStore} from "@/store/detail";
@@ -79,7 +80,7 @@ import {useBookStore} from "@/store/book";
 
 const options = ref({
   gender:[{value:1,label:'男'},{value:2,label:'女'},],
-  model:[{ name: '阴历' }, { name: '四柱' }],
+  model:[{ name: '阳历' }, { name: '四柱' }],
   sect:[{value:1,label:'晚子时日柱算明天'},{value:2,label:'晚子时日柱算当天'},],
   timePicker:{
     year: true,
@@ -100,6 +101,7 @@ const form = reactive({
   defaultTime:"2001-01-01 00:00:00",
   datetimeLabel: null,
   lunarLabel: null,
+  eightchar: null,
 })
 
 const detailStore = useDetailStore();
@@ -142,6 +144,8 @@ onLoad((e) => {
   }
 
   form.defaultTime = uni.$u.date(form.timestamp,"yyyy-mm-dd hh:MM:ss")
+  form.eightchar = Lunar.fromDate(new Date()).getEightChar().toString();
+  pillarDefaultValue.value = form.eightchar;
 });
 
 function SelectTime() {

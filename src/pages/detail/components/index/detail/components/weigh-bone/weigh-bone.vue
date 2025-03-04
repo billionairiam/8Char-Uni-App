@@ -1,6 +1,6 @@
 <template>
   <view class="u-p-b-30">
-    <yx-sheet v-if="bookStore.weigh_bone.poetry" :margin="[20, 20]" :padding="[30, 30]" :round="3" :shadow="10">
+    <yx-sheet v-if="bookStore.weigh_bone.formula" :margin="[20, 20]" :padding="[30, 30]" :round="3" :shadow="10">
       <view class="u-flex u-m-b-16">
         <view class="u-flex-6 u-row-center u-col-top">
           <view class="yx-text-weight-b">
@@ -9,11 +9,11 @@
         </view>
         <view class="u-flex-6 u-flex u-row-right">
           <text class="u-main-color">
-            <u-icon :label="'重量: ' + bookStore.weigh_bone.total" label-color="#303133" name="rmb-circle-fill"></u-icon>
+            <u-icon :label="'重量: ' + bookStore.weigh_bone.weight" label-color="#303133" name="rmb-circle-fill"></u-icon>
           </text>
         </view>
       </view>
-      <template v-for="(item, index) in ['poetry', 'explain', 'title']">
+      <template v-for="(item, index) in ['formula', 'explanation', 'commentary']">
         <view v-if="bookStore.weigh_bone[item]">
           <view
               :class="index === 0 ? 'u-m-y-14' : 'u-m-t-28'"

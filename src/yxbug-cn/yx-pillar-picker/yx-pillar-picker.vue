@@ -58,7 +58,12 @@ import {LunarUtil, Solar} from "lunar-javascript";
 import {deleteFirstElement} from "@/utils/transform";
 
 const TOPS = deleteFirstElement(LunarUtil.GAN);
+const TOPS_YANG = ["甲", "丙", "戊", "庚", "壬"];
+const TOPS_YING = ["乙", "丁", "己", "辛", "癸"];
+
 const BOTTOMS = deleteFirstElement(LunarUtil.ZHI);
+const BOTTOMS_YANG = ['子', '寅', '辰', '午', '申', '戌'];
+const BOTTOMS_YING = ['丑', '卯', '巳', '未', '酉', '亥'];
 
 const drawer = ref();
 
@@ -75,9 +80,8 @@ const pickerCurrent = ref(0);
 
 const isPillar = ref(true);
 
-const pillar = ref(["壬", "壬", "壬", "壬", "寅", "寅", "寅", "寅"]);
+const pillar = ref(retriveEightChar(props.defaultValue));
 
-const tabsList = ref([]);
 const tabCurrent = ref(0);
 
 const tabs = ref({
@@ -96,11 +100,11 @@ watch(
       if (val !== "" && val.length === 8) {
         pillar.value = val.split("");
       }
-    }
+    },
 );
 
 onMounted(() => {
-  const model = tabCurrent.value > 3 ? TOPS : BOTTOMS;
+  const model = pickerCurrent.value > 3 ? BOTTOMS : TOPS;
   pullTabsList(model)
   pullTabs(0);
 });
@@ -110,6 +114,20 @@ function pickerClick(i) {
   pullTabs(i);
 }
 
+function retriveEightChar(eightChar) {
+  const groups = eightChar.split(" ");
+  // 用来存放天干和地支
+  const tiangan = [];
+  const dizhi = [];
+
+  for(var i = 0; i < groups.length; i++) {
+    tiangan.push(groups[i][0]);
+    dizhi.push(groups[i][1]);
+  }
+
+  const result = tiangan.concat(dizhi);
+  return result;
+}
 
 function confirm() {
   const index = time.value.current[0];
@@ -128,7 +146,7 @@ function close() {
 }
 
 function pullTabs(e) {
-  const model = e > 3 ? BOTTOMS : TOPS;
+  const model = e > 3 ? (TOPS_YANG.includes(pillar.value[e-4]) ? BOTTOMS_YANG : BOTTOMS_YING) : TOPS;
   pullTabsList(model)
   nextTick();
   tabsChange(model.indexOf(pillar.value[e]));
@@ -139,14 +157,24 @@ function pullTabsList(model){
   for (let key of model) {
     list.push({name: key});
   }
-  tabsList.value = list;
+  tabs.value.list = list;
 }
 
 function tabsChange(e) {
   tabCurrent.value = e;
   const picker = pickerCurrent.value;
-  if (tabsList.value[e]?.name) {
-    pillar.value[picker] = tabsList.value[e].name;
+  if (tabs.value.list[e]?.name) {
+    // 根据所选 tab 的内容更新 pillar 数组对应位置的值
+    pillar.value[picker] = tabs.value.list[e]?.name;
+    if (picker <= 3) {
+      if (TOPS_YANG.includes(pillar.value[picker]) && BOTTOMS_YING.includes(pillar.value[picker+4])) {
+        pillar.value[picker+4] = BOTTOMS_YANG[0];
+      }
+
+      if (TOPS_YING.includes(pillar.value[picker]) && BOTTOMS_YANG.includes(pillar.value[picker+4])) {
+        pillar.value[picker+4] = BOTTOMS_YING[0];
+      }
+    }
   }
 }
 

@@ -54,6 +54,14 @@ export const useDetailStore = defineStore('detail', {
             for (let key in data) {
                 this[key] = data[key];
             }
+        },
+        defaultPredictPayload(para) {
+            return {
+                timestamp: timeFormat(new Date(this.timestamp), 'yyyy-mm-dd hh:MM:ss'),
+                gender: this.gender,
+                sect: this.sect,
+                index: para
+            };
         }
     },
     getters: {
@@ -74,10 +82,18 @@ export const useDetailStore = defineStore('detail', {
         },
         defaultPayload(state){
             return {
-                datetime: timeFormat(new Date(state.timestamp),'yyyy-mm-dd hh:MM:ss'),
+                timestamp: timeFormat(new Date(state.timestamp),'yyyy-mm-dd hh:MM:ss'),
                 gender: state.gender,
                 sect: state.sect,
             }
-        }
+        },
+        // defaultPredictPayload(state, para){
+        //     return {
+        //         datetime: timeFormat(new Date(state.timestamp),'yyyy-mm-dd hh:MM:ss'),
+        //         gender: state.gender,
+        //         sect: state.sect,
+        //         index: para
+        //     }
+        // }
     }
 });

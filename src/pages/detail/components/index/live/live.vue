@@ -55,7 +55,7 @@ function Computed() {
     uni.hideLoading();
     setTimeout(() => {
       uni.$u.toast("网络请求失败！")
-    }, 1000)
+    }, 1800)
   })
 }
 </script>
