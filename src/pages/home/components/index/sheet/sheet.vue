@@ -69,7 +69,7 @@
 import {reactive, ref, watch} from "vue";
 import {onLoad} from "@dcloudio/uni-app";
 import {Solar, Lunar} from "lunar-javascript";
-import {deleteLocalStorage, getLocalStorage, setLocalStorage} from "@/utils/cache";
+import {deleteLocalStorage, getLocalStorage, setLocalStorage, pushToLocalStorage} from "@/utils/cache";
 import {GetBook, GetInfo} from "@/api/default";
 import {useDetailStore} from "@/store/detail";
 import {firstStringToUpperCase, timeFormat} from "@/utils/transform";
@@ -133,7 +133,7 @@ onLoad((e) => {
       let data = null;
       try {
         data = JSON.parse(cache);
-        form.realname = data.realname;
+        // form.realname = data.realname;
         form.gender = data.gender === 1 ? 1 : 2;
         form.timestamp = data.timestamp;
         form.sect = data.sect ?? 1;
@@ -198,7 +198,16 @@ async function Sumbit() {
     SelectTime();
     return;
   }
-  const name = uni.$u.test.isEmpty(form.realname) ? "不知名网友" : form.realname;
+
+  let index = getLocalStorage("index")
+  if (index) {
+    setLocalStorage("index", index + 1);
+  } else {
+    setLocalStorage("index", 1);
+    index = 1;
+  }
+
+  const name = uni.$u.test.isEmpty(form.realname) ? "案例" + index : form.realname;
 
   const payload = {
     realname: name,
@@ -214,8 +223,14 @@ async function Sumbit() {
   detailStore.set(payload)
   setLocalStorage("info", JSON.stringify(payload));
   try{
-    await GetInfo(detailStore.defaultPayload).then(res=>detailStore.set(res)).catch(()=>{throw 0});
-    await GetBook(detailStore.defaultPayload).then(res=>bookStore.set(res)).catch(() =>{throw 1});
+    await GetInfo(detailStore.defaultPayload).then(res=>{
+      detailStore.set(res);
+      pushToLocalStorage("cases", detailStore.$state)
+    }).catch(()=>{throw 0});
+    await GetBook(detailStore.defaultPayload).then(res=>{
+      bookStore.set(res);
+      pushToLocalStorage("books", bookStore.$state)
+    }).catch(() =>{throw 1});
   }catch (e) {
     const msg = ["获取命盘信息失败！","获取命盘古籍失败！"];
     uni.hideLoading();

@@ -24,6 +24,15 @@
 				"titlePenetrate": "YES",
 				"transparentTitle": "always"
 			}
+		},
+		{
+			"path": "pages/record/index",
+			"style": {
+				"navigationBarTitleText": "四柱易学",
+				"navigationStyle": "custom",
+				"titlePenetrate": "YES",
+				"transparentTitle": "always"
+			}
 		}
 	],
 	"globalStyle": {

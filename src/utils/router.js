@@ -13,3 +13,10 @@ export const toDetail = () => {
         url: '/pages/detail/index'
     });
 }
+
+export const toPages = page => {
+    route({
+        type: 'redirect',
+        url: page
+    });
+}

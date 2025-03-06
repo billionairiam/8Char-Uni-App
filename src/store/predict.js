@@ -12,6 +12,11 @@ export const usePredictStore = defineStore('predict', {
         },
         getPrediction(tabIndex) {
             return this.predictions[tabIndex] || null; // 获取指定 tab 的数据，无数据返回 null
-        }
+        },
+        set(data) {
+            for (let key in data) {
+                this[key] = data[key];
+            }
+        },
     },
 });

@@ -3,6 +3,7 @@
   <head-box></head-box>
   <sheet></sheet>
   <bottom></bottom>
+  <yx-foot></yx-foot>
 </template>
 
 <script setup>

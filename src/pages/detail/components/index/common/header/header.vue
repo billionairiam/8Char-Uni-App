@@ -29,11 +29,10 @@
 </template>
 
 <script setup>
-import {deleteFirstElement} from '@/utils/transform';
+
 import {useDetailStore} from "@/store/detail";
 import {computed, ref} from "vue";
-import {LunarUtil} from "lunar-javascript";
-import {getUrl} from "@/utils/file";
+import {GetChineseZodiac} from "@/utils/file";
 
 const isHide = ref(false);
 const detailStore = useDetailStore();
@@ -48,15 +47,4 @@ const detail = computed(()=>{
     type:`(${type})`,
   }
 })
-
-function GetChineseZodiac(sx){
-  const index = deleteFirstElement(LunarUtil.SHENGXIAO).indexOf(sx);
-  let path;
-  if (index !== -1) {
-    path = `/zodiac/${index}.svg`
-  } else {
-    path = `/site/logo.svg`
-  }
-  return getUrl(`static/icon${path}`);
-}
 </script>

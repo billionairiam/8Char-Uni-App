@@ -17,11 +17,14 @@
       width:'100%',
       height:contentHeight,
     }">
+    <view style="padding-bottom: 40px;">
       <detail v-if="tabsOption.current === 0"></detail>
       <basic v-else-if="tabsOption.current === 1"></basic>
       <major v-else-if="tabsOption.current === 2"></major>
       <live v-else-if="tabsOption.current === 3"></live>
+    </view>
     </scroll-view>
+    <yx-foot></yx-foot>
   </view>
 </template>
 

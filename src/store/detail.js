@@ -87,13 +87,5 @@ export const useDetailStore = defineStore('detail', {
                 sect: state.sect,
             }
         },
-        // defaultPredictPayload(state, para){
-        //     return {
-        //         datetime: timeFormat(new Date(state.timestamp),'yyyy-mm-dd hh:MM:ss'),
-        //         gender: state.gender,
-        //         sect: state.sect,
-        //         index: para
-        //     }
-        // }
     }
 });

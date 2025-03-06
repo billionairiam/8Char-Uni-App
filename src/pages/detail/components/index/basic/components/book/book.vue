@@ -58,6 +58,7 @@ function Computed(tabIndex) {
   GetPrediction(detailStore.defaultPredictPayload(tabIndex))
     .then((res) => {
       predictStore.setPrediction(tabIndex, res); // 存储到 Pinia store
+      pushToLocalStorage("predict", predictStore.$state)
       uni.hideLoading();
     })
     .catch(() => {
