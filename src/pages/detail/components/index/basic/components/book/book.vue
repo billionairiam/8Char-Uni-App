@@ -82,7 +82,7 @@ const startPrediction = async (tabIndex) => {
 
     // 创建WebSocket连接
     socketTask = uni.connectSocket({
-      url: 'ws://0x311008.com/8char/get-prediction',
+      url: 'wss://0x311008.com/8char/get-prediction',
       complete: () => {}
     });
 
