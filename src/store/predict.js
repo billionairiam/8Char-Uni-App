@@ -18,5 +18,10 @@ export const usePredictStore = defineStore('predict', {
                 this[key] = data[key];
             }
         },
+        appendTitle(tabIndex, chunk) {
+            if (this.predictions[tabIndex] && this.predictions[tabIndex][0]) {
+                this.predictions[tabIndex][0].title += chunk;
+            }
+        }
     },
 });
